@@ -1,68 +1,227 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+@import "tailwindcss";
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+/* ─── A2: Design Tokens — El Gringo Celulares ─────────────────────────────── */
+@theme {
+  /* Palette — dark-first, high-contrast system */
+  --color-bg-base:        hsl(220 18% 8%);
+  --color-bg-surface:     hsl(220 16% 12%);
+  --color-bg-elevated:    hsl(220 14% 16%);
+  --color-bg-overlay:     hsl(220 12% 20%);
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
+  --color-border-subtle:  hsl(220 12% 22%);
+  --color-border-default: hsl(220 10% 28%);
+  --color-border-strong:  hsl(220 8% 38%);
+
+  /* Brand accent — vivid cyan-teal */
+  --color-accent:         hsl(183 72% 48%);
+  --color-accent-hover:   hsl(183 72% 55%);
+  --color-accent-muted:   hsl(183 50% 20%);
+  --color-accent-subtle:  hsl(183 40% 14%);
+
+  /* Semantic status */
+  --color-success:        hsl(148 60% 44%);
+  --color-success-muted:  hsl(148 40% 14%);
+  --color-warning:        hsl(38 92% 50%);
+  --color-warning-muted:  hsl(38 60% 14%);
+  --color-danger:         hsl(4 86% 58%);
+  --color-danger-muted:   hsl(4 60% 14%);
+  --color-info:           hsl(210 86% 58%);
+  --color-info-muted:     hsl(210 50% 14%);
+
+  /* Text scale */
+  --color-text-primary:   hsl(220 20% 95%);
+  --color-text-secondary: hsl(220 14% 65%);
+  --color-text-tertiary:  hsl(220 10% 44%);
+  --color-text-disabled:  hsl(220 8% 32%);
+  --color-text-inverse:   hsl(220 18% 8%);
+
+  /* Typography — Inter from Google Fonts */
+  --font-sans:  'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-mono:  'JetBrains Mono', ui-monospace, 'Cascadia Code', monospace;
+
+  /* Type scale */
+  --text-xs:    0.75rem;
+  --text-sm:    0.875rem;
+  --text-base:  1rem;
+  --text-lg:    1.125rem;
+  --text-xl:    1.25rem;
+  --text-2xl:   1.5rem;
+  --text-3xl:   1.875rem;
+  --text-4xl:   2.25rem;
+
+  /* Line heights */
+  --leading-tight:  1.25;
+  --leading-snug:   1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed:1.625;
+
+  /* Letter spacing */
+  --tracking-tight:  -0.03em;
+  --tracking-snug:   -0.02em;
+  --tracking-normal:  0em;
+  --tracking-wide:    0.02em;
+  --tracking-widest:  0.08em;
+
+  /* Spacing scale (design decisions) */
+  --spacing-sidebar: 16rem;     /* 256 px */
+  --spacing-topbar:  3.5rem;    /* 56 px  */
+
+  /* Radius */
+  --radius-sm:  6px;
+  --radius-md:  10px;
+  --radius-lg:  14px;
+  --radius-xl:  20px;
+  --radius-pill:9999px;
+
+  /* Shadows — offset + blur, no decorative halos */
+  --shadow-sm:  0 1px 3px hsl(220 25% 4% / 0.5), 0 1px 2px hsl(220 25% 4% / 0.4);
+  --shadow-md:  0 4px 12px hsl(220 25% 4% / 0.55), 0 2px 4px hsl(220 25% 4% / 0.4);
+  --shadow-lg:  0 8px 24px hsl(220 25% 4% / 0.60), 0 4px 8px hsl(220 25% 4% / 0.4);
+
+  /* Transitions */
+  --duration-fast:   120ms;
+  --duration-normal: 200ms;
+  --duration-slow:   320ms;
+  --ease-out:        cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out:     cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Z-index scale */
+  --z-sidebar:  40;
+  --z-topbar:   50;
+  --z-dropdown: 60;
+  --z-modal:    70;
+  --z-toast:    80;
+}
+
+/* ─── Base / Reset ────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+  text-rendering: optimizeLegibility;
 }
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  background-color: var(--color-bg-base);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  line-height: var(--leading-normal);
+  min-height: 100dvh;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* ─── Browser surface theming (craft-floor requirement) ────────────────────── */
+::selection {
+  background-color: var(--color-accent-muted);
+  color: var(--color-accent);
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
 }
-button:hover {
-  border-color: #646cff;
+::-webkit-scrollbar-track {
+  background: var(--color-bg-surface);
 }
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-default);
+  border-radius: var(--radius-pill);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-border-strong);
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+/* Focus ring — consistent, accent-tinted */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Caret */
+input,
+textarea {
+  caret-color: var(--color-accent);
+}
+
+/* ─── Typography scale ────────────────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-weight: 600;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-snug);
+  color: var(--color-text-primary);
+}
+
+p {
+  margin: 0;
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-secondary);
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+  text-underline-offset: 3px;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+a:hover {
+  color: var(--color-accent-hover);
+  text-decoration: underline;
+}
+
+code,
+kbd,
+pre {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
+/* ─── Utility layer ──────────────────────────────────────────────────────── */
+@layer utilities {
+  .bg-base     { background-color: var(--color-bg-base);     }
+  .bg-surface  { background-color: var(--color-bg-surface);  }
+  .bg-elevated { background-color: var(--color-bg-elevated); }
+  .bg-overlay  { background-color: var(--color-bg-overlay);  }
+
+  .text-primary   { color: var(--color-text-primary);   }
+  .text-secondary { color: var(--color-text-secondary); }
+  .text-tertiary  { color: var(--color-text-tertiary);  }
+  .text-accent    { color: var(--color-accent);         }
+
+  .border-subtle  { border-color: var(--color-border-subtle);  }
+  .border-default { border-color: var(--color-border-default); }
+  .border-strong  { border-color: var(--color-border-strong);  }
+
+  .rounded-sm   { border-radius: var(--radius-sm);   }
+  .rounded-md   { border-radius: var(--radius-md);   }
+  .rounded-lg   { border-radius: var(--radius-lg);   }
+  .rounded-xl   { border-radius: var(--radius-xl);   }
+  .rounded-pill { border-radius: var(--radius-pill); }
+
+  .shadow-card { box-shadow: var(--shadow-sm); }
+  .shadow-md   { box-shadow: var(--shadow-md); }
+  .shadow-lg   { box-shadow: var(--shadow-lg); }
+
+  .transition-fast   { transition-duration: var(--duration-fast);   transition-timing-function: var(--ease-out); }
+  .transition-normal { transition-duration: var(--duration-normal); transition-timing-function: var(--ease-out); }
+  .transition-slow   { transition-duration: var(--duration-slow);   transition-timing-function: var(--ease-out); }
+
+  .tracking-tight { letter-spacing: var(--tracking-tight); }
+  .tracking-snug  { letter-spacing: var(--tracking-snug);  }
+  .tracking-wide  { letter-spacing: var(--tracking-wide);  }
+  .tracking-widest{ letter-spacing: var(--tracking-widest);}
+
+  /* Tabular numbers for prices, quantities and IDs */
+  .tabular-nums { font-variant-numeric: tabular-nums; }
+
+  /* Line-clamp helpers */
+  .line-clamp-1 { overflow: hidden; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; }
+  .line-clamp-2 { overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
 }
